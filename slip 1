@@ -1,0 +1,21 @@
+Slip1
+1)Write a PHP script to keep track of number of times the web page has been accessed (Use
+Session Tracking). 
+&lt;?php
+session_start();
+if(isset($_SESSION[&#39;page_views&#39;])) {
+$_SESSION[&#39;page_views&#39;]++;
+} else {
+$_SESSION[&#39;page_views&#39;] = 1;
+}
+echo &quot;You have visited this page &quot; . $_SESSION[&#39;page_views&#39;] . &quot; times.&quot;;
+$inactive = 1800; // 30 minutes in seconds
+if (isset($_SESSION[&#39;timeout&#39;])) {
+$session_life = time() - $_SESSION[&#39;timeout&#39;];
+if ($session_life &gt; $inactive) {
+session_destroy();
+header(&quot;Location: &quot;.$_SERVER[&#39;PHP_SELF&#39;]);
+}
+}
+$_SESSION[&#39;timeout&#39;] = time();
+?&gt;
